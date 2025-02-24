@@ -38,6 +38,7 @@ def check_health(host, port, timeout):
 
 
 if __name__ == "__main__":
+    interval = 5
     while True:
         check_health(host="nginx", port=8084, timeout=5)
-        time.sleep(5)
+        time.sleep(interval)
