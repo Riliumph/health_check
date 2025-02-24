@@ -50,4 +50,18 @@ healthy
 切断された場合はヘルスチェック異常。  
 ただし、春暖の可能性があるので再接続処理をしてつながらないことの確認が必要。
 
-###
+### ヘルスチェックアプリの使い方
+
+コンテナの起動と同時にソフトウェアは立ち上がる。
+
+ログの確認
+
+```console
+$ docker compose exec -it health_checker cat /app/logs/sys.log
+```
+
+コンテナの中に入る
+
+```console
+$ docker compose exec -it health_checker /bin/bash
+```
