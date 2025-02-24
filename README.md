@@ -78,7 +78,7 @@ $ docker compose exec -it health_checker cat /app/logs/sys.log
 $ docker compose exec -it health_checker /bin/bash
 ```
 
-### ユースケース（サーバーダウン）
+### nginx（サーバーダウン）
 
 コンテナの起動
 
@@ -114,4 +114,20 @@ $ docker compose exec -it health_checker cat /app/logs/sys.log
 {"asctime": "2025-02-24 22:11:03,793", "levelname": "ERROR", "message": "Connection error: [Errno -2] Name or service not known"}
 {"asctime": "2025-02-24 22:11:16,794", "levelname": "ERROR", "message": "Connection error: [Errno -3] Temporary failure in name resolution"}
 {"asctime": "2025-02-24 22:11:29,797", "levelname": "ERROR", "message": "Connection error: [Errno -3] Temporary failure in name resolution"}
+```
+
+### health_server
+
+```console
+$ docker compose exec -it health_checker nc health_server 84import os
+/health
+healthy
+(待機)
+```
+
+```console
+$ docker compose exec -it health_checker nc health_server 84import os
+/app
+hello
+(待機)
 ```
