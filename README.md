@@ -2,8 +2,16 @@
 
 ## 使い方
 
+環境の立ち上げ
+
 ```console
 $ docker compose up -d
+```
+
+環境の停止
+
+```console
+$ docker compose down --volumes
 ```
 
 ### nginxへのアクセス
@@ -64,4 +72,42 @@ $ docker compose exec -it health_checker cat /app/logs/sys.log
 
 ```console
 $ docker compose exec -it health_checker /bin/bash
+```
+
+### ユースケース（サーバーダウン）
+
+コンテナの起動
+
+```console
+$ docker compose up -d
+```
+
+ログの確認
+
+```console
+$ docker compose exec -it health_checker cat /app/logs/sys.log
+{"asctime": "2025-02-24 22:10:45,969", "levelname": "INFO", "message": "Health check passed."}
+{"asctime": "2025-02-24 22:10:50,970", "levelname": "INFO", "message": "Health check passed."}
+```
+
+サーバーの停止
+
+```console
+$ docker stop health_check-nginx-1
+health_check-nginx-1
+$ docker ps -a
+CONTAINER ID   IMAGE                         COMMAND                  CREATED         STATUS                     PORTS     NAMES
+39fa565e81fa   health_check-health_checker   "python checker.py"      4 minutes ago   Up 3 minutes                         health_check-health_checker-1
+6c7b48842111   health_check-nginx            "/docker-entrypoint.…"   4 minutes ago   Exited (0) 3 minutes ago             health_check-nginx-1
+```
+
+ログの確認
+
+```console
+$ docker compose exec -it health_checker cat /app/logs/sys.log
+{"asctime": "2025-02-24 22:10:45,969", "levelname": "INFO", "message": "Health check passed."}
+{"asctime": "2025-02-24 22:10:50,970", "levelname": "INFO", "message": "Health check passed."}
+{"asctime": "2025-02-24 22:11:03,793", "levelname": "ERROR", "message": "Connection error: [Errno -2] Name or service not known"}
+{"asctime": "2025-02-24 22:11:16,794", "levelname": "ERROR", "message": "Connection error: [Errno -3] Temporary failure in name resolution"}
+{"asctime": "2025-02-24 22:11:29,797", "levelname": "ERROR", "message": "Connection error: [Errno -3] Temporary failure in name resolution"}
 ```

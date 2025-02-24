@@ -13,21 +13,25 @@ sys_logger = logging.getLogger("sys")
 pre_health = False
 
 
-def check_health(host, port):
+def check_health(host, port, timeout):
     try:
         with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.settimeout(5)
+            s.settimeout(timeout)
             # TODO: 毎回接続するのコスト高い
             s.connect((host, port))
 
             # ヘルスチェックレスポンスを受け取る
-            response = s.recv(1024).decode('utf-8').strip()
+            response = s.recv(1024)
+            if not response:
+                sys_logger.error("server closed connection")
+                return False
+            response = response.decode('utf-8').strip()
 
             if response == "healthy":
                 sys_logger.info("Health check passed.")
                 return True
             else:
-                sys_logger.error("Unexpected response:", response)
+                sys_logger.error("server application error:", response)
                 return False
     except socket.timeout:
         sys_logger.error("Connection timed out.")
@@ -38,8 +42,6 @@ def check_health(host, port):
 
 
 if __name__ == "__main__":
-    host = "nginx"
-    port = 8084
     while True:
-        check_health(host, port)
+        check_health(host="nginx", port=8084, timeout=5)
         time.sleep(5)
