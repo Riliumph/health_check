@@ -15,11 +15,7 @@ pre_health = False
 
 def check_health(host, port, timeout):
     try:
-        with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as s:
-            s.settimeout(timeout)
-            # TODO: 毎回接続するのコスト高い
-            s.connect((host, port))
-
+        with socket.create_connection((host, port), timeout) as s:
             # ヘルスチェックレスポンスを受け取る
             response = s.recv(1024)
             if not response:
