@@ -1,0 +1,44 @@
+{
+    "[dockercompose]": {
+        "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+    },
+    "[dockerfile]": {
+        "editor.defaultFormatter": "ms-azuretools.vscode-docker"
+    },
+    "[json]": {
+        "editor.defaultFormatter": "vscode.json-language-features",
+        "editor.tabSize": 2
+    },
+    "[python]": {
+        "editor.defaultFormatter": "ms-python.autopep8",
+        "editor.formatOnSave": true,
+        "editor.tabSize": 4
+    },
+    "[sql]": {
+        "editor.defaultFormatter": "inferrinizzard.prettier-sql-vscode"
+    },
+    "autoDocstring.quoteStyle": "'''",
+    "cSpell.words": [
+        "inputport",
+        "interactor",
+        "usecase"
+    ],
+    "editor.codeActionsOnSave": {
+        "source.organizeImports": "explicit"
+    },
+    "jupyter.askForKernelRestart": false,
+    "notebook.cellToolbarVisibility": "hover",
+    "notebook.formatOnSave.enabled": true,
+    "notebook.output.scrolling": true,
+    "notebook.output.wordWrap": true,
+    "python.analysis.extraPaths": [
+        "/home/vscode/.local/lib/python3.11/site-packages"
+    ],
+    "python.autoComplete.extraPaths": [
+        "/home/vscode/.local/lib/python3.11/site-packages"
+    ],
+    "python.formatting.provider": "autopep8",
+    "Prettier-SQL.keywordCase": "upper",
+    "Prettier-SQL.SQLFlavourOverride": "postgresql",
+    "Prettier-SQL.expressionWidth": 128
+}
