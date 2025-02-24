@@ -1,5 +1,9 @@
 # HealthChecker
 
+## NW
+
+![nw図](nw.png)
+
 ## 使い方
 
 環境の立ち上げ
