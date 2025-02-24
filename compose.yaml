@@ -1,0 +1,68 @@
+services:
+    nginx:
+      build:
+        context: ./nginx
+        dockerfile: Dockerfile
+      hostname: nginx
+      stdin_open: true
+      tty: true
+      volumes:
+        - type: bind
+          source: nginx/nginx.conf
+          target: /etc/nginx/nginx.conf
+          read_only: true
+        - type: bind
+          source: nginx/conf.d
+          target: /etc/nginx/conf.d
+          read_only: true
+        - type: bind
+          source: nginx/service_a.html
+          target: /usr/share/nginx/html/service-a.html
+          read_only: true
+      networks:
+        health_nw:
+          ipv4_address: 10.10.11.2
+    # health_server:
+    #   build:
+    #     context: ./health_server
+    #     dockerfile: Dockerfile
+    #   hostname: health_server
+    #   stdin_open: true
+    #   tty: true
+    #   volumes:
+    #     - type: bind
+    #       source: src/
+    #       target: /app
+    #       read_only: true
+    #   networks:
+    #     health_nw:
+    #   depends_on:
+    #     - nginx
+    health_checker:
+      build:
+        context: ./health_checker
+        dockerfile: Dockerfile
+      hostname: health_checker
+      stdin_open: true
+      tty: true
+      volumes:
+        - type: bind
+          source: src/
+          target: /app
+          read_only: true
+      networks:
+        health_nw:
+      depends_on:
+        - nginx
+
+volumes:
+  log_storage:
+    name: log_storage
+    external: false
+
+networks:
+  health_nw:
+    ipam:
+      driver: default
+      config:
+        - subnet: 10.10.11.0/24
