@@ -22,4 +22,5 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY src/ /app/
 
-ENTRYPOINT ["python", "checker.py"]
+ENTRYPOINT ["python", "main.py","--host", "health_server", "--port", "84"]
+
