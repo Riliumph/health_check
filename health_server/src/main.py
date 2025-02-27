@@ -1,4 +1,5 @@
 import argparse
+import asyncio
 import logging
 
 import logger
@@ -14,4 +15,4 @@ if __name__ == "__main__":
                         help="Server port (default: 84)")
     args = parser.parse_args()
     app_logger.info(f"argument: {args.host}:{args.port}")
-    start(args.host, args.port)
+    asyncio.run(start(args.host, args.port))
