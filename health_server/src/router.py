@@ -12,4 +12,4 @@ ROUTE_TABLE: Dict[str, Callable[[], str]] = {
 
 async def handle_request(command: str) -> str:
     """リクエストに対する適切なレスポンスを返す"""
-    return ROUTE_TABLE.get(command, lambda: "unknown command")()
+    return await ROUTE_TABLE.get(command, lambda: "unknown command")()
