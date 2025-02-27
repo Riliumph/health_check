@@ -22,4 +22,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 
 COPY src/ /app/
 
-ENTRYPOINT ["python", "server.py", "--host", "0.0.0.0", "--port", "84"]
+ENTRYPOINT ["python", "main.py", "--host", "0.0.0.0", "--port", "84"]
