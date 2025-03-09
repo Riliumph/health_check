@@ -36,8 +36,8 @@ services:
 
     health_checker:
       build:
-        context: ./health_checker
-        dockerfile: Dockerfile
+        context: .
+        dockerfile: health_checker/Dockerfile
       hostname: health_checker
       stdin_open: true
       tty: true

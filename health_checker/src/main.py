@@ -1,8 +1,9 @@
 import argparse
 import logging
 
-import logger
-from client import start
+from client import client
+
+from common.log import logger
 
 app_logger = logging.getLogger("app")
 
@@ -16,4 +17,6 @@ if __name__ == "__main__":
     args = parser.parse_args()
 
     # クライアントを起動
-    start(args.host, args.port)
+    logger.init("/app/common/log/config.json")
+    app_logger.info(f"argument: {args.host}:{args.port}")
+    client.start(args.host, args.port)

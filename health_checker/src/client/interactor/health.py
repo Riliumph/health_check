@@ -1,8 +1,6 @@
 import logging
 import socket
-import threading
 import time
-from typing import Callable
 
 app_logger = logging.getLogger("app")
 
@@ -27,6 +25,14 @@ def health_request(host: str, port: int):
                 time.sleep(5)
             except socket.timeout:
                 app_logger.error("Timeout occurred.")
+                # timeout_count = timeout_count+1
+                # if timeout_count < 3:
+                #     app_logger.info("retry")
+                #     continue
+                # else:
+                #     app_logger.error("timeout retry over")
+                #     hello_endpoint_active = False
+                #     break
     app_logger.info(f"hello_endpoint_active is {hello_endpoint_active}")
 
 
@@ -46,21 +52,12 @@ def hello_request(host: str, port: int):
                 time.sleep(10)
         except socket.timeout:
             app_logger.error("Timeout occurred.")
+            # timeout_count = timeout_count+1
+            # if timeout_count < 3:
+            #     app_logger.info("hello retry")
+            #     continue
+            # else:
+            #     app_logger.error("hello timeout retry over")
+            #     hello_endpoint_active = False
+            #     break
     app_logger.info(f"hello_endpoint_active is {hello_endpoint_active}")
-
-
-def start(dest: str, port: int) -> None:
-    """クライアントを起動し、スレッドでリクエストを投げ続ける"""
-    hello_thread = threading.Thread(target=hello_request,  args=(dest, port))
-    hello_thread.daemon = True  # detach
-    hello_thread.start()
-
-    health_thread = threading.Thread(target=health_request, args=(dest, port))
-    health_thread.daemon = True  # detach
-    health_thread.start()
-
-    try:
-        while True:
-            time.sleep(1)  # サーバー機能の処理は省く
-    except KeyboardInterrupt:
-        print("クライアントを終了します。")
