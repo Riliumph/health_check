@@ -69,13 +69,15 @@ healthy
 ログの確認
 
 ```console
-$ docker compose exec -it health_checker cat /app/logs/sys.log
+$ docker compose exec -it health_checker tail -10 /app/logs/app.log
+$ docker compose exec -it health_server  tail -10 /app/logs/access.log
 ```
 
 コンテナの中に入る
 
 ```console
 $ docker compose exec -it health_checker /bin/bash
+$ docker compose exec -it health_server  /bin/bash
 ```
 
 ### nginx（サーバーダウン）
@@ -119,14 +121,14 @@ $ docker compose exec -it health_checker cat /app/logs/sys.log
 ### health_server
 
 ```console
-$ docker compose exec -it health_checker nc health_server 84import os
+$ docker compose exec -it health_checker nc health_server 84
 /health
 healthy
 (待機)
 ```
 
 ```console
-$ docker compose exec -it health_checker nc health_server 84import os
+$ docker compose exec -it health_checker nc health_server 84
 /app
 hello
 (待機)
