@@ -17,9 +17,10 @@ RUN apt-get update -qq &&\
 RUN printf "PS1='[\@]\u@\h(\$(hostname -i)):\w \n\\$ '" >> /root/.bashrc
 
 WORKDIR /app
-COPY requirements.txt /app
+COPY health_server/requirements.txt /app
 RUN pip install --no-cache-dir -r requirements.txt
 
-COPY src/ /app/
+COPY common/ /app/common/
+COPY health_server/src/ /app/
 
 ENTRYPOINT ["python", "main.py", "--host", "0.0.0.0", "--port", "84"]

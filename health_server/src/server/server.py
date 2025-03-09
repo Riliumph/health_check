@@ -2,9 +2,10 @@ import asyncio
 import logging
 import uuid
 
-from interactor.context import request_id_var
-from logger import RequestIDFilter
-from router import handle_request
+from server.interactor.context import request_id_var
+from server.router import handle_request
+
+from common.log.access_log import RequestIDFilter
 
 app_logger = logging.getLogger("app")
 

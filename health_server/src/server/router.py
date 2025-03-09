@@ -1,8 +1,8 @@
 
 from typing import Callable, Dict
 
-from interactor.health import handle_health
-from interactor.hello import handle_hello
+from server.interactor.health import handle_health
+from server.interactor.hello import handle_hello
 
 ROUTE_TABLE: Dict[str, Callable[[], str]] = {
     "/health": handle_health,

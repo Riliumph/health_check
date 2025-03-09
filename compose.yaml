@@ -24,8 +24,8 @@ services:
           ipv4_address: 10.10.11.2
     health_server:
       build:
-        context: ./health_server
-        dockerfile: Dockerfile
+        context: .
+        dockerfile: health_server/Dockerfile
       hostname: health_server
       stdin_open: true
       tty: true
