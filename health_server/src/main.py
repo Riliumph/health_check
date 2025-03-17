@@ -15,12 +15,13 @@ if __name__ == "__main__":
                         help="Server host (default: 0.0.0.0)")
     parser.add_argument("--port", type=int, default=84,
                         help="Server port (default: 84)")
+    parser.add_argument("--dest_host", type=str,
+                        help="destination host")
+    parser.add_argument("--dest_port", type=int,
+                        help="destination port")
     args = parser.parse_args()
     logger.init("/app/common/log/config.json")
     app_logger.info(f"argument: {args.host}:{args.port}")
 
-    dest_host = "health_checker"
-    dest_port = 84
-    client.start(dest_host, dest_port)
-
+    client.start(args.dest_host, args.dest_port)
     asyncio.run(server.start(args.host, args.port))

@@ -10,19 +10,18 @@ from common.log import logger
 app_logger = logging.getLogger("app")
 
 if __name__ == "__main__":
-    # コマンドライン引数のパーサー設定
-    parser = argparse.ArgumentParser(description="client")
-    parser.add_argument('--host', type=str, default='health_server',
-                        help='サーバーホスト（デフォルト: health_server）')
-    parser.add_argument('--port', type=int, default=80,
-                        help='サーバーポート（デフォルト: 84）')
+    parser = argparse.ArgumentParser(description="L4 Server with epoll")
+    parser.add_argument("--host", type=str, default="0.0.0.0",
+                        help="Server host (default: 0.0.0.0)")
+    parser.add_argument("--port", type=int, default=84,
+                        help="Server port (default: 84)")
+    parser.add_argument("--dest_host", type=str,
+                        help="destination host")
+    parser.add_argument("--dest_port", type=int,
+                        help="destination port")
     args = parser.parse_args()
-
-    # クライアントを起動
     logger.init("/app/common/log/config.json")
     app_logger.info(f"argument: {args.host}:{args.port}")
-    client.start(args.host, args.port)
 
-    src_host = "0.0.0.0"
-    src_port = 84
-    asyncio.run(server.start(src_host, src_port))
+    client.start(args.dest_host, args.dest_port)
+    asyncio.run(server.start(args.host, args.port))

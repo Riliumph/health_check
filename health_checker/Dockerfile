@@ -23,4 +23,4 @@ RUN pip install --no-cache-dir -r requirements.txt
 COPY common/ /app/common/
 COPY health_checker/src/ /app/
 
-ENTRYPOINT ["python", "main.py","--host", "health_server", "--port", "84"]
+ENTRYPOINT ["python", "main.py", "--host", "0.0.0.0", "--port", "84", "--dest_host", "health_server", "--dest_port", "84" ]
