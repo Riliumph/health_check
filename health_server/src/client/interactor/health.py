@@ -4,7 +4,7 @@ import time
 
 app_logger = logging.getLogger("app")
 
-hello_endpoint_active = True
+hello_endpoint_active = False
 
 
 def health_request(host: str, port: int):
@@ -14,7 +14,16 @@ def health_request(host: str, port: int):
     # timeout_count = 0
     with socket.socket(socket.AF_INET, socket.SOCK_STREAM) as health_socket:
         app_logger.info("connect to /health")
-        health_socket.connect((host, port))
+        while True:
+            try:
+                health_socket.connect((host, port))
+                hello_endpoint_active = True
+                break
+            except ConnectionRefusedError:
+                app_logger.error("Connection refused.")
+                time.sleep(5)
+                continue
+
         while hello_endpoint_active:
             try:
                 health_socket.sendall("/health".encode())
@@ -22,17 +31,18 @@ def health_request(host: str, port: int):
                 health_socket.settimeout(2)
                 response = health_socket.recv(1024)
                 app_logger.info(f"Response to /health: {response.decode()}")
+                timeout_count = 0
                 time.sleep(5)
             except socket.timeout:
                 app_logger.error("Timeout occurred.")
-                # timeout_count = timeout_count+1
-                # if timeout_count < 3:
-                #     app_logger.info("retry")
-                #     continue
-                # else:
-                #     app_logger.error("timeout retry over")
-                #     hello_endpoint_active = False
-                #     break
+                timeout_count = timeout_count+1
+                if timeout_count < 3:
+                    app_logger.info("retry")
+                    continue
+                else:
+                    app_logger.error("timeout retry over")
+                    hello_endpoint_active = False
+                    break
     app_logger.info(f"hello_endpoint_active is {hello_endpoint_active}")
 
 
