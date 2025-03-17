@@ -2,8 +2,9 @@ import asyncio
 import logging
 import random
 
-from interactor.context import request_id_var
-from log.access_log import RequestIDFilter
+from server.interactor.context import request_id_var
+
+from common.log.access_log import RequestIDFilter
 
 
 async def handle_hello() -> str:

@@ -17,9 +17,3 @@ def start(dest: str, port: int) -> None:
     health_thread = threading.Thread(target=health_request, args=(dest, port))
     health_thread.daemon = True  # detach
     health_thread.start()
-
-    try:
-        while not stop_event.wait(timeout=1):
-            pass
-    except KeyboardInterrupt:
-        print("クライアントを終了します。")

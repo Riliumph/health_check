@@ -1,7 +1,9 @@
 import argparse
+import asyncio
 import logging
 
 from client import client
+from server import server
 
 from common.log import logger
 
@@ -20,3 +22,7 @@ if __name__ == "__main__":
     logger.init("/app/common/log/config.json")
     app_logger.info(f"argument: {args.host}:{args.port}")
     client.start(args.host, args.port)
+
+    src_host = "0.0.0.0"
+    src_port = 84
+    asyncio.run(server.start(src_host, src_port))
