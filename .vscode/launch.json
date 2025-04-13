@@ -9,8 +9,11 @@
             "type": "python",
             "request": "launch",
             "cwd": "${workspaceFolder}",
-            "program": "${workspaceFolder}/src/main.py",
-            "args": [],
+            "program": "${workspaceFolder}/health_server/src/main.py",
+            "args": [
+                "0.0.0.0",
+                "84"
+            ],
             "console": "integratedTerminal",
             "justMyCode": true
         }
