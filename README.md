@@ -91,7 +91,7 @@ $ docker compose up -d
 ログの確認
 
 ```console
-$ docker compose exec -it health_checker cat /app/logs/sys.log
+$ docker compose exec -it health_checker cat /app/logs/app.log
 {"asctime": "2025-02-24 22:10:45,969", "levelname": "INFO", "message": "Health check passed."}
 {"asctime": "2025-02-24 22:10:50,970", "levelname": "INFO", "message": "Health check passed."}
 ```
@@ -110,7 +110,7 @@ CONTAINER ID   IMAGE                         COMMAND                  CREATED   
 ログの確認
 
 ```console
-$ docker compose exec -it health_checker cat /app/logs/sys.log
+$ docker compose exec -it health_checker cat /app/logs/app.log
 {"asctime": "2025-02-24 22:10:45,969", "levelname": "INFO", "message": "Health check passed."}
 {"asctime": "2025-02-24 22:10:50,970", "levelname": "INFO", "message": "Health check passed."}
 {"asctime": "2025-02-24 22:11:03,793", "levelname": "ERROR", "message": "Connection error: [Errno -2] Name or service not known"}
